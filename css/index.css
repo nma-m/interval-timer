@@ -1,17 +1,54 @@
 body {
   background: #dddddd;
-  margin: 24px;
+  /* margin: 24px; */
 }
 
-.timer {
+.display {
   font-family: sans-serif;
-  display: inline-block;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  text-align: center;
   padding: 24px 32px;
   border-radius: 30px;
   background: white;
 }
 
-.timer__part {
+.interval__part {
   font-size: 36px;
   font-weight: bold;
+}
+
+.timer__part {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.control {
+  font-family: sans-serif;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  text-align: center;
+  padding: 24px 32px;
+
+  background: white;
+}
+
+.input {
+  font-family: sans-serif;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  text-align: center;
+  padding: 24px 32px;
+
+  background: white;
+}
+
+.interval__digit--unset {
+  color: gray;
 }

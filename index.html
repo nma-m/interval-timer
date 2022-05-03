@@ -10,33 +10,41 @@
   </head>
   <body>
     <script src="js/main.js" type="module"></script>
-    <div class="timer">
-      <span class="interval__part interval__part--hours">00</span>
-      <span class="interval__part">:</span>
-      <span class="interval__part interval__part--minutes">00</span>
-      <span class="interval__part">:</span>
-      <span class="interval__part interval__part--seconds">00</span>
-
-      <span class="timer__part timer__part--hours">00</span>
-      <span class="timer__part">:</span>
-      <span class="timer__part timer__part--minutes">00</span>
-      <span class="timer__part">:</span>
-      <span class="timer__part timer__part--seconds">00</span>
-      <button type="button" class="timer__btn timer__btn--control timer__btn--start">
+    <div class="display">
+      <div class="interval">
+        <span class="interval__part interval__part--hours">00</span>
+        <span class="interval__part">:</span>
+        <span class="interval__part interval__part--minutes">00</span>
+        <span class="interval__part">:</span>
+        <span class="interval__part interval__part--seconds">00</span>
+      </div>
+      <div class="timer">
+        <span class="timer__part timer__part--hours">00</span>
+        <span class="timer__part">:</span>
+        <span class="timer__part timer__part--minutes">00</span>
+        <span class="timer__part">:</span>
+        <span class="timer__part timer__part--seconds">00</span>
+      </div>
+    </div>
+    <div class="control">
+      <button type="button" class="timer__btn timer__btn--control timer__btn--start" tabindex="1">
         Start
       </button>
-      <button type="button" class="timer__btn timer__btn--cancel">
+      <button type="button" class="timer__btn timer__btn--cancel" tabindex="2">
         Cancel
       </button>
     </div>
-    <div>
-      <input class="interval__input interval__input--hours" type="number" value="59" min="0" max="23" maxlength="2">
-      <span>hr</span>
-      <input class="interval__input interval__input--minutes" type="number" value="59" min="0" max="59" maxlength="2">
-      <span>min</span>
-      <input class="interval__input interval__input--seconds" type="number" value="59" min="0" max="59" maxlength="2">
-      <span>sec</span>
-      <button class="interval__input interval__input--add">Add Interval</button>
+    <div class="input" tabindex="3">
+      <span class="interval__digit interval__digit--unset">0</span>
+      <span class="interval__digit interval__digit--unset">0</span>
+      <span class="separator">hr</span>
+      <span class="interval__digit interval__digit--unset">0</span>
+      <span class="interval__digit interval__digit--unset">0</span>
+      <span class="separator">min</span>
+      <span class="interval__digit interval__digit--unset">0</span>
+      <span class="interval__digit interval__digit--unset">0</span>
+      <span class="separator">sec</span>
+      <button class="timer__btn timer__btn--add">Add Interval</button>
     </div>
   </body>
 </html>
