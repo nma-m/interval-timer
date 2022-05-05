@@ -1,54 +1,157 @@
-body {
-  background: #dddddd;
-  /* margin: 24px; */
-}
-
-.display {
-  font-family: sans-serif;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 40%;
-  text-align: center;
-  padding: 24px 32px;
-  border-radius: 30px;
-  background: white;
-}
-
-.interval__part {
-  font-size: 36px;
-  font-weight: bold;
-}
-
-.timer__part {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.control {
-  font-family: sans-serif;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 40%;
-  text-align: center;
-  padding: 24px 32px;
-
-  background: white;
+:root {
+  /* COLORS */
+  --green: green;
+  --trans-green: rgba(0, 128, 0, .15);
+  --orange: orange;
+  --trans-orange: rgba(255, 165, 0, .15);
+  --red: red;
+  --trans-red: rgba(255, 0 , 0, .15);
+  --blue: cornflowerblue;
+  --trans-blue: rgba(100, 249, 237, .15);
 }
 
 .input {
-  font-family: sans-serif;
+  background: #f2f1f1;
+}
+
+.display {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 40%;
+  width: 75%;
+  font-size: 0;
+  font-family: 'Fira Code', monospace;
+  text-align: center;
+  border-radius: 30px;
+}
+
+.interval__part {
+  font-size: 13vw;
+  font-weight: 300;
+}
+
+.timer__part {
+  font-size: 6vw;
+  font-weight: 500;
+}
+
+.control {
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+  text-align: center;
+}
+
+button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border-width: 2px;
+  border-style: solid;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 3vw;
+  font-weight: 400;
+  text-align: center;
+}
+
+button:hover {
+  background-color: aliceblue;
+}
+
+button:active {
+  background-color: #d2d2d2;
+}
+
+.control button {
+  width: 45%;
+  height: 10vh;
+  max-height: 93px;
+  border-radius: 15px;
+  border-style: none;
+}
+
+.timer__btn--start {
+  background-color: var(--trans-green);
+  color: var(--green);
+}
+
+.timer__btn--stop {
+  background-color: var(--trans-orange);
+  color: var(--orange);
+}
+
+.timer__btn--clear {
+  background-color: var(--red);
+  color: white;
+}
+
+.timer__btn--add {
+  width: 22.5%;
+  /* height: 10vh; */
+  border-radius: 15px;
+  border-style: none;
+  background-color: var(--blue);
+  color: white;
+}
+
+
+
+.input {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+  font-family: 'Fira Sans', sans-serif;
+  font-weight: 300;
+  font-size: 0;
   text-align: center;
   padding: 24px 32px;
+  border-radius: 30px;
+}
 
-  background: white;
+.input:hover {
+  cursor: pointer;
+}
+
+.interval__digit {
+  font-size: 5vw;
 }
 
 .interval__digit--unset {
   color: gray;
+}
+
+.digit__unit {
+  padding-left: 1vw;
+  padding-right: 2vw;
+  font-size: 3.5vw;
+}
+
+.digit__unit--unset {
+  color: gray;
+}
+
+.caret {
+  font-size: 5vw;
+  animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.instructions {
+  display: block;
+  font-size: 2vw;
+  font-weight: 300;
+  font-style: italic;
 }

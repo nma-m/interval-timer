@@ -4,40 +4,51 @@ import Timer from './Timer.js';
 //          TIMER          //
 //////////////// ////////////
 
-var timer = new Timer()
+var timer = new Timer();
 
 // Add an Interval to Timer.intervals and update the interface
 document.querySelector('.timer__btn--add').addEventListener('click', addInterval);
 
-// Start and pause the timer
+// Start and pause the timer with button click
 document.querySelector('.timer__btn--control').addEventListener('click', () => {
-  if (timer.remainingSecondsTotal === 0) {
-    // do nothing until they add time
-  } else if (timer.interval === null) {
-    start();
-  } else {
-    stop();
+  start();
+});
+
+// Start and pause the timer with Space
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Space') {
+    console.log('Space');
+    document.querySelector('.timer__btn--control').click();
   }
 });
 
-// Reset the timer
-document.querySelector('.timer__btn--cancel').addEventListener('click', () => {
+// Reset the timer with button click
+document.querySelector('.timer__btn--clear').addEventListener('click', () => {
   if (timer.intervals.length > 0) {
     clear();
+  }
+});
+
+// Reset the timer with ESC
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (timer.intervals.length > 0) {
+      document.querySelector('.timer__btn--clear').click();
+    }
   }
 });
 
 function addInterval() {
   if (timer.interval == null) { // only allow edits to timer when paused
 
-    const hours = document.querySelectorAll('.interval__digit').item(0).innerText +
-      document.querySelectorAll('.interval__digit').item(1).innerText;
+    const hours = document.querySelectorAll('.interval__digit')[0].innerText +
+      document.querySelectorAll('.interval__digit')[1].innerText;
 
-    const minutes = document.querySelectorAll('.interval__digit').item(2).innerText +
-      document.querySelectorAll('.interval__digit').item(3).innerText;
+    const minutes = document.querySelectorAll('.interval__digit')[2].innerText +
+      document.querySelectorAll('.interval__digit')[3].innerText;
 
-    const seconds = document.querySelectorAll('.interval__digit').item(4).innerText +
-      document.querySelectorAll('.interval__digit').item(5).innerText;
+    const seconds = document.querySelectorAll('.interval__digit')[4].innerText +
+      document.querySelectorAll('.interval__digit')[5].innerText;
 
     if (hours === '00' && minutes === '00' && seconds === '00') {
       // can't add interval of length 00:00:00
@@ -69,6 +80,7 @@ function addInterval() {
       for (var element of document.querySelectorAll('.interval__digit').values()) {
         unset(element);
       }
+      colorLabels();
     }
   }
 }
@@ -105,31 +117,41 @@ function updateInterfaceContols() {
 }
 
 function start() {
-  var currentInterval = timer.intervals[0];
+  if (timer.remainingSecondsTotal === 0) {
+    // do nothing until they add time
+  } else if (timer.interval === null) {
+    document.querySelector('.input').setAttribute('style', 'visibility:hidden');
+    var currentInterval = timer.intervals[0];
 
-  timer.interval = setInterval(() => {
-    currentInterval.remainingSeconds -= 1;
-    timer.remainingSecondsTotal -= 1;
-    updateInterfaceTime();
+    timer.interval = setInterval(() => {
+      currentInterval.remainingSeconds -= 1;
+      timer.remainingSecondsTotal -= 1;
+      updateInterfaceTime();
 
-    if (currentInterval.remainingSeconds === 0) {
-      if (timer.intervals.length > 1) { // if there's another interval 
-        currentInterval = timer.pop();
-        updateInterfaceTime();
-      } else {  // if it's the last interval
-        timer.intervals.shift();
-        stop();
+      if (currentInterval.remainingSeconds === 0) {
+        if (timer.intervals.length > 1) { // if there's another interval 
+          currentInterval = timer.pop();
+          updateInterfaceTime();
+          document.querySelector('.interval_alarm').play();
+        } else {  // if it's the last interval
+          timer.intervals.shift();
+          stop();
+          document.querySelector('.timer_alarm').play();
+        }
       }
-    }
-  }, 1000);
+    }, 1000);
 
-  updateInterfaceContols();
+    updateInterfaceContols();
+  } else {
+    stop();
+  }
 }
 
 function stop() {
   clearInterval(timer.interval);
   timer.interval = null;
   updateInterfaceContols();
+  document.querySelector('.input').removeAttribute('style', 'visibility:hidden');
 }
 
 function clear() {
@@ -159,12 +181,15 @@ function clear() {
 document.querySelector('.input').addEventListener('focus', () => {
   document.querySelector('.input').addEventListener('keydown', type);
   document.querySelector('.input').addEventListener('keydown', addWithEnter);
+  toggleCaret();
 });
 
 // Remove event listeners on the input div
 document.querySelector('.input').addEventListener('blur', () => {
   document.querySelector('.input').removeEventListener('keydown', type);
   document.querySelector('.input').removeEventListener('keydown', addWithEnter);
+  toggleCaret();
+
 });
 
 function type(e) {
@@ -213,11 +238,13 @@ function type(e) {
       }
     }
   }
+  // Color the unit labels
+  colorLabels();
 }
 
 function addWithEnter(e) {
   if (e.key === 'Enter') {
-    addInterval();
+    document.querySelector('.timer__btn--add').click();
   }
 }
 
@@ -231,4 +258,28 @@ function unset(element) {
   element.innerText = 0;
   element.classList.add('interval__digit--unset');
   element.classList.remove('interval__digit--set');
+}
+
+function colorLabels() {
+  if (document.querySelectorAll('.interval__digit--set').length === 0) {
+    document.querySelectorAll('.digit__unit').forEach(element => element.classList.add('digit__unit--unset'));
+  } else if (document.querySelectorAll('.interval__digit--set').length < 3) {
+    document.querySelectorAll('.digit__unit')[2].classList.remove('digit__unit--unset');
+    document.querySelectorAll('.digit__unit')[1].classList.add('digit__unit--unset');
+  } else if (document.querySelectorAll('.interval__digit--set').length < 5) {
+    document.querySelectorAll('.digit__unit')[1].classList.remove('digit__unit--unset');
+    document.querySelectorAll('.digit__unit')[0].classList.add('digit__unit--unset');
+  } else {
+    document.querySelectorAll('.digit__unit')[0].classList.remove('digit__unit--unset');
+  }
+}
+
+function toggleCaret() {
+  if (document.activeElement == document.querySelector('.input')) {
+    document.querySelector('.caret').removeAttribute('style', 'display:none');
+    document.querySelector('.digit__unit--sec').setAttribute('style', 'padding-left:0');
+  } else {
+    document.querySelector('.caret').setAttribute('style', 'display:none');
+    document.querySelector('.digit__unit--sec').removeAttribute('style', 'padding-left:0');
+  }
 }

@@ -5,11 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interval Timer</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&family=Fira+Sans:ital,wght@0,400;1,300&display=swap"
+      rel="stylesheet">
   </head>
   <body>
     <script src="js/main.js" type="module"></script>
+        <div class="input" tabindex="1">
+          <span class="instructions">Click to type</span>
+          <span class="interval__digit interval__digit--unset">0</span>
+          <span class="interval__digit interval__digit--unset">0</span>
+          <span class="digit__unit digit__unit--unset">hr</span>
+          <span class="interval__digit interval__digit--unset">0</span>
+          <span class="interval__digit interval__digit--unset">0</span>
+          <span class="digit__unit digit__unit--unset">min</span>
+          <span class="interval__digit interval__digit--unset">0</span>
+          <span class="interval__digit interval__digit--unset">0</span>
+          <span class="caret" style="display:none">|</span>
+          <span class="digit__unit digit__unit--unset digit__unit--sec">sec</span>
+          <button class="timer__btn timer__btn--add">Add</button>
+        </div>
     <div class="display">
       <div class="interval">
         <span class="interval__part interval__part--hours">00</span>
@@ -27,24 +45,20 @@
       </div>
     </div>
     <div class="control">
+      <button type="button" class="timer__btn timer__btn--clear" tabindex="2">
+        Clear
+      </button>
       <button type="button" class="timer__btn timer__btn--control timer__btn--start" tabindex="1">
         Start
       </button>
-      <button type="button" class="timer__btn timer__btn--cancel" tabindex="2">
-        Cancel
-      </button>
     </div>
-    <div class="input" tabindex="3">
-      <span class="interval__digit interval__digit--unset">0</span>
-      <span class="interval__digit interval__digit--unset">0</span>
-      <span class="separator">hr</span>
-      <span class="interval__digit interval__digit--unset">0</span>
-      <span class="interval__digit interval__digit--unset">0</span>
-      <span class="separator">min</span>
-      <span class="interval__digit interval__digit--unset">0</span>
-      <span class="interval__digit interval__digit--unset">0</span>
-      <span class="separator">sec</span>
-      <button class="timer__btn timer__btn--add">Add Interval</button>
-    </div>
+    <audio class="interval_alarm">
+      <source src="static/interval_alarm.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <audio class="timer_alarm">
+      <source src="static/timer_alarm.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
   </body>
 </html>
