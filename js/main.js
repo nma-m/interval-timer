@@ -6,9 +6,6 @@ import Timer from './Timer.js';
 
 var timer = new Timer();
 
-// Add an Interval to Timer.intervals and update the interface
-document.querySelector('.timer__btn--add').addEventListener('click', addInterval);
-
 // Start and pause the timer with button click
 document.querySelector('.timer__btn--control').addEventListener('click', () => {
   start();
@@ -16,9 +13,9 @@ document.querySelector('.timer__btn--control').addEventListener('click', () => {
 
 // Start and pause the timer with Space
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Space') {
-    console.log('Space');
-    document.querySelector('.timer__btn--control').click();
+  if (e.key === ' ') {
+    e.preventDefault();
+    start();
   }
 });
 
@@ -33,7 +30,7 @@ document.querySelector('.timer__btn--clear').addEventListener('click', () => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     if (timer.intervals.length > 0) {
-      document.querySelector('.timer__btn--clear').click();
+      clear();
     }
   }
 });
@@ -41,14 +38,14 @@ document.addEventListener('keydown', (e) => {
 function addInterval() {
   if (timer.interval == null) { // only allow edits to timer when paused
 
-    const hours = document.querySelectorAll('.interval__digit')[0].innerText +
-      document.querySelectorAll('.interval__digit')[1].innerText;
+    const hours = document.querySelectorAll('.interval__digit')[0].textContent +
+      document.querySelectorAll('.interval__digit')[1].textContent;
 
-    const minutes = document.querySelectorAll('.interval__digit')[2].innerText +
-      document.querySelectorAll('.interval__digit')[3].innerText;
+    const minutes = document.querySelectorAll('.interval__digit')[2].textContent +
+      document.querySelectorAll('.interval__digit')[3].textContent;
 
-    const seconds = document.querySelectorAll('.interval__digit')[4].innerText +
-      document.querySelectorAll('.interval__digit')[5].innerText;
+    const seconds = document.querySelectorAll('.interval__digit')[4].textContent +
+      document.querySelectorAll('.interval__digit')[5].textContent;
 
     if (hours === '00' && minutes === '00' && seconds === '00') {
       // can't add interval of length 00:00:00
@@ -80,7 +77,7 @@ function addInterval() {
       for (var element of document.querySelectorAll('.interval__digit').values()) {
         unset(element);
       }
-      colorLabels();
+      colorDigitUnits();
     }
   }
 }
@@ -106,12 +103,18 @@ function updateInterfaceContols() {
   // TODO: if completely unstarted, display Start
   // TODO: change display to text, start btn -> Resume and pause btn -> Pause
   if (timer.interval === null) { // if paused
-    control.innerText = 'Start';
+    control.innerHTML =
+      `Start
+      <span class="instructions">(space)</span>
+      `;
     control.classList.add('timer__btn--start');
-    control.classList.remove('timer__btn--stop');
+    control.classList.remove('timer__btn--pause');
   } else { // if running
-    control.innerText = 'Pause';
-    control.classList.add('timer__btn--stop');
+    control.innerHTML = 
+      `Pause
+      <span class="instructions">(space)</span>
+      `;
+    control.classList.add('timer__btn--pause');
     control.classList.remove('timer__btn--start');
   }
 }
@@ -120,7 +123,6 @@ function start() {
   if (timer.remainingSecondsTotal === 0) {
     // do nothing until they add time
   } else if (timer.interval === null) {
-    document.querySelector('.input').setAttribute('style', 'visibility:hidden');
     var currentInterval = timer.intervals[0];
 
     timer.interval = setInterval(() => {
@@ -136,12 +138,16 @@ function start() {
         } else {  // if it's the last interval
           timer.intervals.shift();
           stop();
+          document.querySelector('.input').focus();
           document.querySelector('.timer_alarm').play();
         }
       }
     }, 1000);
 
     updateInterfaceContols();
+    document.querySelector('.input').blur();
+    document.querySelector('.instructions--input').style.color = 'var(--gray)';
+    document.querySelector('.instructions--input').style.visibility = 'visible';
   } else {
     stop();
   }
@@ -151,7 +157,7 @@ function stop() {
   clearInterval(timer.interval);
   timer.interval = null;
   updateInterfaceContols();
-  document.querySelector('.input').removeAttribute('style', 'visibility:hidden');
+  document.querySelector('.instructions--input').style.color = 'black';
 }
 
 function clear() {
@@ -170,6 +176,8 @@ function clear() {
   document.querySelector('.timer__part--hours').textContent = '00';
   document.querySelector('.timer__part--minutes').textContent = '00';
   document.querySelector('.timer__part--seconds').textContent = '00';
+  
+  document.querySelector('.input').focus();
 }
 
 
@@ -177,19 +185,25 @@ function clear() {
 //          TYPER INPUT          //
 ///////////////////////////////////
 
-// Type in the desired input length
+// Add an Interval to Timer.intervals and update the interface
+document.querySelector('.input__btn--add').addEventListener('click', addInterval);
+
+// Allow user to input interval if timer is stopped
 document.querySelector('.input').addEventListener('focus', () => {
-  document.querySelector('.input').addEventListener('keydown', type);
-  document.querySelector('.input').addEventListener('keydown', addWithEnter);
-  toggleCaret();
+  if (timer.interval === null) {
+    document.querySelector('.input').addEventListener('keydown', type);
+    document.querySelector('.input').addEventListener('keydown', addWithEnter);
+    toggleCaret();
+    document.querySelector('.instructions--input').style.visibility = 'hidden';
+  }
 });
 
-// Remove event listeners on the input div
+// Disable typing in the input box
 document.querySelector('.input').addEventListener('blur', () => {
   document.querySelector('.input').removeEventListener('keydown', type);
   document.querySelector('.input').removeEventListener('keydown', addWithEnter);
   toggleCaret();
-
+  document.querySelector('.instructions--input').style.visibility = 'visible';
 });
 
 function type(e) {
@@ -208,7 +222,7 @@ function type(e) {
           // shift set value over
           set(
             document.querySelectorAll('.interval__digit--unset')[document.querySelectorAll('.interval__digit--unset').length - 1],
-            document.querySelectorAll('.interval__digit--set')[i].innerText
+            document.querySelectorAll('.interval__digit--set')[i].textContent
           );
           // mark set value's old place unset
           unset(document.querySelectorAll('.interval__digit--set')[i+1]);
@@ -231,7 +245,7 @@ function type(e) {
         // shift set value over
         set(
           document.querySelectorAll('.interval__digit--unset')[document.querySelectorAll('.interval__digit--unset').length - 1],
-          document.querySelectorAll('.interval__digit--set')[i-1].innerText
+          document.querySelectorAll('.interval__digit--set')[i-1].textContent
         );
         // mark set value's old place unset
         unset(document.querySelectorAll('.interval__digit--set')[i-1]);
@@ -239,33 +253,37 @@ function type(e) {
     }
   }
   // Color the unit labels
-  colorLabels();
+  colorDigitUnits();
 }
 
 function addWithEnter(e) {
-  if (e.key === 'Enter') {
-    document.querySelector('.timer__btn--add').click();
+  if (e.key === 'Enter' && document.querySelector('.input__btn--add').style.backgroundColor !== 'var(--gray)') {
+    addInterval();
   }
 }
 
 function set(element, text) {
-  element.innerText = text;
+  element.textContent = text;
   element.classList.add('interval__digit--set');
   element.classList.remove('interval__digit--unset');
 }
 
 function unset(element) {
-  element.innerText = 0;
+  element.textContent = 0;
   element.classList.add('interval__digit--unset');
   element.classList.remove('interval__digit--set');
 }
 
-function colorLabels() {
+function colorDigitUnits() {
   if (document.querySelectorAll('.interval__digit--set').length === 0) {
     document.querySelectorAll('.digit__unit').forEach(element => element.classList.add('digit__unit--unset'));
+    document.querySelector('.input__btn--add').style.backgroundColor = 'var(--gray)';
+    document.querySelector('.input__btn--add').style.color = 'var(--dark-gray)';
   } else if (document.querySelectorAll('.interval__digit--set').length < 3) {
     document.querySelectorAll('.digit__unit')[2].classList.remove('digit__unit--unset');
     document.querySelectorAll('.digit__unit')[1].classList.add('digit__unit--unset');
+    document.querySelector('.input__btn--add').style.backgroundColor = 'var(--blue)';
+    document.querySelector('.input__btn--add').style.color = 'white';
   } else if (document.querySelectorAll('.interval__digit--set').length < 5) {
     document.querySelectorAll('.digit__unit')[1].classList.remove('digit__unit--unset');
     document.querySelectorAll('.digit__unit')[0].classList.add('digit__unit--unset');
@@ -276,10 +294,15 @@ function colorLabels() {
 
 function toggleCaret() {
   if (document.activeElement == document.querySelector('.input')) {
-    document.querySelector('.caret').removeAttribute('style', 'display:none');
-    document.querySelector('.digit__unit--sec').setAttribute('style', 'padding-left:0');
+    document.querySelector('.caret').style.display = 'inline';
+    document.querySelector('.digit__unit--sec').style.paddingLeft = '0';
   } else {
-    document.querySelector('.caret').setAttribute('style', 'display:none');
-    document.querySelector('.digit__unit--sec').removeAttribute('style', 'padding-left:0');
+    document.querySelector('.caret').style.display = 'none';
+    document.querySelector('.digit__unit--sec').style.paddingLeft = '1vw';
   }
 }
+
+
+window.addEventListener('DOMContentLoaded', function () {
+  document.querySelector('.input').focus();
+});

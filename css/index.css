@@ -1,17 +1,16 @@
 :root {
   /* COLORS */
-  --green: green;
-  --trans-green: rgba(0, 128, 0, .15);
-  --orange: orange;
-  --trans-orange: rgba(255, 165, 0, .15);
-  --red: red;
-  --trans-red: rgba(255, 0 , 0, .15);
-  --blue: cornflowerblue;
-  --trans-blue: rgba(100, 249, 237, .15);
-}
-
-.input {
-  background: #f2f1f1;
+  --green: rgb(36, 138, 61);
+  --trans-green: rgba(36, 138,61, .15);
+  --orange: rgb(255, 149, 0);
+  --trans-orange: rgba(255, 149, 0, 0.15);
+  --red: rgb(215, 0, 21);
+  --hover-red: rgb(255, 59, 48);
+  --active-red: rgb(255, 59, 48);
+  --blue: rgb(0, 122, 255);
+  --trans-blue: rgba(0, 122, 255, 0.1);
+  --gray: rgb(174, 174, 178);
+  --dark-gray: rgb(108, 108, 112);
 }
 
 .display {
@@ -45,11 +44,8 @@
 }
 
 button {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border-width: 2px;
-  border-style: solid;
+  border-radius: 15px;
+  cursor: pointer;
   font-family: 'Fira Sans', sans-serif;
   font-size: 3vw;
   font-weight: 400;
@@ -65,10 +61,8 @@ button:active {
 }
 
 .control button {
-  width: 45%;
-  height: 10vh;
-  max-height: 93px;
-  border-radius: 15px;
+  width: 10em;
+  height: 2.5em;
   border-style: none;
 }
 
@@ -77,7 +71,7 @@ button:active {
   color: var(--green);
 }
 
-.timer__btn--stop {
+.timer__btn--pause {
   background-color: var(--trans-orange);
   color: var(--orange);
 }
@@ -87,16 +81,21 @@ button:active {
   color: white;
 }
 
-.timer__btn--add {
-  width: 22.5%;
-  /* height: 10vh; */
-  border-radius: 15px;
-  border-style: none;
-  background-color: var(--blue);
-  color: white;
+.timer__btn--clear:hover {
+  background-color: var(--hover-red);
 }
 
+.timer__btn--clear:active {
+  background-color: var(--red);
+}
 
+.input__btn--add {
+  width: 5em;
+  height: 2.5em;
+  border-style: none;
+  background-color: var(--gray);
+  color: var(--dark-gray);
+}
 
 .input {
   display: block;
@@ -109,6 +108,7 @@ button:active {
   text-align: center;
   padding: 24px 32px;
   border-radius: 30px;
+  background-color: var(--trans-blue);
 }
 
 .input:hover {
@@ -120,7 +120,7 @@ button:active {
 }
 
 .interval__digit--unset {
-  color: gray;
+  color: var(--gray);
 }
 
 .digit__unit {
@@ -130,11 +130,12 @@ button:active {
 }
 
 .digit__unit--unset {
-  color: gray;
+  color: var(--gray);
 }
 
 .caret {
   font-size: 5vw;
+  color: var(--blue);
   animation: blink 1s linear infinite;
 }
 

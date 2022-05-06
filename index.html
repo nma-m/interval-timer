@@ -15,7 +15,7 @@
   <body>
     <script src="js/main.js" type="module"></script>
         <div class="input" tabindex="1">
-          <span class="instructions">Click to type</span>
+          <span class="instructions instructions--input">(click to type)</span>
           <span class="interval__digit interval__digit--unset">0</span>
           <span class="interval__digit interval__digit--unset">0</span>
           <span class="digit__unit digit__unit--unset">hr</span>
@@ -26,7 +26,10 @@
           <span class="interval__digit interval__digit--unset">0</span>
           <span class="caret" style="display:none">|</span>
           <span class="digit__unit digit__unit--unset digit__unit--sec">sec</span>
-          <button class="timer__btn timer__btn--add">Add</button>
+          <button class="timer__btn input__btn--add">
+            Add
+            <span class="instructions">(enter)</span>
+          </button>          
         </div>
     <div class="display">
       <div class="interval">
@@ -45,11 +48,13 @@
       </div>
     </div>
     <div class="control">
-      <button type="button" class="timer__btn timer__btn--clear" tabindex="2">
+      <button type="button" class="timer__btn timer__btn--clear">
         Clear
+        <span class="instructions">(esc)</span>
       </button>
-      <button type="button" class="timer__btn timer__btn--control timer__btn--start" tabindex="1">
+      <button type="button" class="timer__btn timer__btn--control timer__btn--start">
         Start
+        <span class="instructions">(space)</span>
       </button>
     </div>
     <audio class="interval_alarm">
