@@ -109,7 +109,7 @@ button:active {
   width: 75%;
   font-family: 'Fira Sans', sans-serif;
   font-weight: 300;
-  font-size: 0;
+  font-size: 0; /* remove spacing between spans */
   text-align: center;
   padding: 24px 32px;
   border-radius: 30px;

@@ -143,6 +143,7 @@ function start() {
     }, 1000);
 
     updateInterfaceContols();
+    clearInput();
     document.querySelector('.input').blur();
   } else {
     stop();
@@ -252,12 +253,6 @@ function type(e) {
   colorDigitUnits();
 }
 
-function addWithEnter(e) {
-  if (e.key === 'Enter') {
-    addInterval();
-  }
-}
-
 function set(element, text) {
   element.textContent = text;
   element.classList.add('interval__digit--set');
@@ -277,12 +272,31 @@ function colorDigitUnits() {
   } else if (document.querySelectorAll('.interval__digit--set').length < 3) {
     document.querySelectorAll('.digit__unit')[2].classList.remove('digit__unit--unset');
     document.querySelectorAll('.digit__unit')[1].classList.add('digit__unit--unset');
-    document.querySelector('.input__btn--add').classList.remove('input__btn--add-disabled');
+    colorAddButton();
   } else if (document.querySelectorAll('.interval__digit--set').length < 5) {
     document.querySelectorAll('.digit__unit')[1].classList.remove('digit__unit--unset');
     document.querySelectorAll('.digit__unit')[0].classList.add('digit__unit--unset');
+    colorAddButton();
   } else {
     document.querySelectorAll('.digit__unit')[0].classList.remove('digit__unit--unset');
+    colorAddButton();
+  }
+}
+
+function colorAddButton() {
+  for (var i = 0; i < document.querySelectorAll('.interval__digit--set').length; i++) {
+    if (document.querySelectorAll('.interval__digit--set')[i].textContent !== '0') {
+      document.querySelector('.input__btn--add').classList.remove('input__btn--add-disabled');
+      break;
+    } else {
+      document.querySelector('.input__btn--add').classList.add('input__btn--add-disabled');
+    }
+  }
+}
+
+function addWithEnter(e) {
+  if (e.key === 'Enter') {
+    addInterval();
   }
 }
 
@@ -306,6 +320,12 @@ function toggleInputInstructions() {
   } else {
     document.querySelector('.instructions--input').classList.add('instructions--input-disabled');
   }
+}
+
+function clearInput() {
+  document.querySelectorAll('.interval__digit--set').forEach(digit => unset(digit));
+  colorDigitUnits();
+  document.querySelector('.input__btn--add').classList.add('input__btn--add-disabled');
 }
 
 window.addEventListener('DOMContentLoaded', function () {
