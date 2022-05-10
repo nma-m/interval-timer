@@ -119,7 +119,7 @@ button {
   background-color: var(--active-blue);
 }
 
-.input__btn--add-disabled {
+.input__btn--add-disabled, .input__btn--add-disabled:active, .input__btn--add-disabled:hover {
   background-color: var(--gray);
   color: var(--dark-gray);
 }

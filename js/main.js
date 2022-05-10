@@ -204,9 +204,17 @@ document.querySelector('.input').addEventListener('focus', () => {
 document.querySelector('.input').addEventListener('blur', () => {
   document.querySelector('.input').removeEventListener('keydown', type);
   document.querySelector('.input').removeEventListener('keydown', addWithEnter);
-  document.querySelector('.input__btn--add').classList.add('input__btn--add-disabled')
+  document.querySelector('.input__btn--add').classList.add('input__btn--add-disabled');
   toggleCaret();
   toggleInputInstructions();
+});
+
+// Add button coloring evennt listeners
+document.querySelector('.input__btn--add').addEventListener('focus', () => {
+  colorAddButton();
+});
+document.querySelector('.input__btn--add').addEventListener('blur', () => {
+  document.querySelector('.input__btn--add').classList.add('input__btn--add-disabled');
 });
 
 function type(e) {
