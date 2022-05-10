@@ -144,6 +144,7 @@ function start() {
 
     updateInterfaceContols();
     clearInput();
+    toggleInputInstructions();
     document.querySelector('.input').blur();
   } else {
     stop();
@@ -183,13 +184,17 @@ function clear() {
 ///////////////////////////////////
 
 // Add an Interval to Timer.intervals and update the interface
-document.querySelector('.input__btn--add').addEventListener('click', addInterval);
+document.querySelector('.input__btn--add').addEventListener('click', () => {
+  addInterval();
+  document.querySelector('.input').focus();
+});
 
 // Allow user to input interval if timer is stopped
 document.querySelector('.input').addEventListener('focus', () => {
   if (timer.interval === null) {
     document.querySelector('.input').addEventListener('keydown', type);
     document.querySelector('.input').addEventListener('keydown', addWithEnter);
+    colorAddButton();
     toggleCaret();
     toggleInputInstructions();
   }
@@ -199,6 +204,7 @@ document.querySelector('.input').addEventListener('focus', () => {
 document.querySelector('.input').addEventListener('blur', () => {
   document.querySelector('.input').removeEventListener('keydown', type);
   document.querySelector('.input').removeEventListener('keydown', addWithEnter);
+  document.querySelector('.input__btn--add').classList.add('input__btn--add-disabled')
   toggleCaret();
   toggleInputInstructions();
 });
