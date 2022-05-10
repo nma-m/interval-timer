@@ -93,6 +93,11 @@ button:active {
   width: 5em;
   height: 2.5em;
   border-style: none;
+  background-color: var(--blue);
+  color: white;
+}
+
+.input__btn--add-disabled {
   background-color: var(--gray);
   color: var(--dark-gray);
 }
@@ -133,10 +138,19 @@ button:active {
   color: var(--gray);
 }
 
+.digit__unit--sec-with-caret {
+  padding-left: 0;
+}
+
 .caret {
+  display: inline;
   font-size: 5vw;
   color: var(--blue);
   animation: blink 1s linear infinite;
+}
+
+.caret-disabled {
+  display: none;
 }
 
 @keyframes blink {
@@ -156,3 +170,11 @@ button:active {
   font-weight: 300;
   font-style: italic;
 }
+
+.instructions--input-disabled {
+  visibility: hidden;
+}
+
+/* .instructions--input {
+  color: red;
+} */

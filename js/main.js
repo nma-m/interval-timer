@@ -100,8 +100,6 @@ function updateInterfaceTime() {
 
 function updateInterfaceContols() {
   var control = document.querySelector('.timer__btn--control');
-  // TODO: if completely unstarted, display Start
-  // TODO: change display to text, start btn -> Resume and pause btn -> Pause
   if (timer.interval === null) { // if paused
     control.innerHTML =
       `Start
@@ -146,8 +144,6 @@ function start() {
 
     updateInterfaceContols();
     document.querySelector('.input').blur();
-    document.querySelector('.instructions--input').style.color = 'var(--gray)';
-    document.querySelector('.instructions--input').style.visibility = 'visible';
   } else {
     stop();
   }
@@ -157,7 +153,7 @@ function stop() {
   clearInterval(timer.interval);
   timer.interval = null;
   updateInterfaceContols();
-  document.querySelector('.instructions--input').style.color = 'black';
+  toggleInputInstructions();
 }
 
 function clear() {
@@ -194,7 +190,7 @@ document.querySelector('.input').addEventListener('focus', () => {
     document.querySelector('.input').addEventListener('keydown', type);
     document.querySelector('.input').addEventListener('keydown', addWithEnter);
     toggleCaret();
-    document.querySelector('.instructions--input').style.visibility = 'hidden';
+    toggleInputInstructions();
   }
 });
 
@@ -203,7 +199,7 @@ document.querySelector('.input').addEventListener('blur', () => {
   document.querySelector('.input').removeEventListener('keydown', type);
   document.querySelector('.input').removeEventListener('keydown', addWithEnter);
   toggleCaret();
-  document.querySelector('.instructions--input').style.visibility = 'visible';
+  toggleInputInstructions();
 });
 
 function type(e) {
@@ -257,7 +253,7 @@ function type(e) {
 }
 
 function addWithEnter(e) {
-  if (e.key === 'Enter' && document.querySelector('.input__btn--add').style.backgroundColor !== 'var(--gray)') {
+  if (e.key === 'Enter') {
     addInterval();
   }
 }
@@ -277,13 +273,11 @@ function unset(element) {
 function colorDigitUnits() {
   if (document.querySelectorAll('.interval__digit--set').length === 0) {
     document.querySelectorAll('.digit__unit').forEach(element => element.classList.add('digit__unit--unset'));
-    document.querySelector('.input__btn--add').style.backgroundColor = 'var(--gray)';
-    document.querySelector('.input__btn--add').style.color = 'var(--dark-gray)';
+    document.querySelector('.input__btn--add').classList.add('input__btn--add-disabled');
   } else if (document.querySelectorAll('.interval__digit--set').length < 3) {
     document.querySelectorAll('.digit__unit')[2].classList.remove('digit__unit--unset');
     document.querySelectorAll('.digit__unit')[1].classList.add('digit__unit--unset');
-    document.querySelector('.input__btn--add').style.backgroundColor = 'var(--blue)';
-    document.querySelector('.input__btn--add').style.color = 'white';
+    document.querySelector('.input__btn--add').classList.remove('input__btn--add-disabled');
   } else if (document.querySelectorAll('.interval__digit--set').length < 5) {
     document.querySelectorAll('.digit__unit')[1].classList.remove('digit__unit--unset');
     document.querySelectorAll('.digit__unit')[0].classList.add('digit__unit--unset');
@@ -294,14 +288,25 @@ function colorDigitUnits() {
 
 function toggleCaret() {
   if (document.activeElement == document.querySelector('.input')) {
-    document.querySelector('.caret').style.display = 'inline';
-    document.querySelector('.digit__unit--sec').style.paddingLeft = '0';
+    document.querySelector('.caret').classList.remove('caret-disabled');
+    document.querySelector('.digit__unit--sec').classList.add('digit__unit--sec-with-caret');
   } else {
-    document.querySelector('.caret').style.display = 'none';
-    document.querySelector('.digit__unit--sec').style.paddingLeft = '1vw';
+    document.querySelector('.caret').classList.add('caret-disabled');
+    document.querySelector('.digit__unit--sec').classList.remove('digit__unit--sec-with-caret');
   }
 }
 
+function toggleInputInstructions() {
+  if (timer.interval === null) {
+    if (document.activeElement == document.querySelector('.input')) {
+      document.querySelector('.instructions--input').classList.add('instructions--input-disabled');
+    } else {
+      document.querySelector('.instructions--input').classList.remove('instructions--input-disabled');
+    }
+  } else {
+    document.querySelector('.instructions--input').classList.add('instructions--input-disabled');
+  }
+}
 
 window.addEventListener('DOMContentLoaded', function () {
   document.querySelector('.input').focus();
