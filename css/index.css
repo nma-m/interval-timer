@@ -1,27 +1,35 @@
 :root {
   /* COLORS */
   --green: rgb(36, 138, 61);
-  --trans-green: rgba(36, 138,61, .15);
+  --trans-green: rgba(52, 199, 89, .25);
+  --hover-green: rgba(48, 219, 91, .20);
+  --active-green: rgba(36, 138, 61, .25);
   --orange: rgb(255, 149, 0);
   --trans-orange: rgba(255, 149, 0, 0.15);
+  --hover-orange: rgba(255, 179, 64, 0.15);
+  --active-orange: rgb(255, 149, 0, .25);
   --red: rgb(215, 0, 21);
-  --hover-red: rgb(255, 59, 48);
+  --hover-red: rgb(255, 105, 97);
   --active-red: rgb(255, 59, 48);
   --blue: rgb(0, 122, 255);
+  --hover-blue: rgb(100, 210, 255);
+  --active-blue: rgb(64, 156, 255);
   --trans-blue: rgba(0, 122, 255, 0.1);
   --gray: rgb(174, 174, 178);
   --dark-gray: rgb(108, 108, 112);
 }
 
+body {
+  background-color: white;
+  margin: 0;
+}
+
 .display {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 75%;
+  margin: calc(100px - 5%) auto;
   font-size: 0;
   font-family: 'Fira Code', monospace;
   text-align: center;
-  border-radius: 30px;
 }
 
 .interval__part {
@@ -37,9 +45,7 @@
 .control {
   position: relative;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 75%;
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -50,14 +56,6 @@ button {
   font-size: 3vw;
   font-weight: 400;
   text-align: center;
-}
-
-button:hover {
-  background-color: aliceblue;
-}
-
-button:active {
-  background-color: #d2d2d2;
 }
 
 .control button {
@@ -71,9 +69,25 @@ button:active {
   color: var(--green);
 }
 
+.timer__btn--start:hover {
+  background-color: var(--hover-green);
+}
+
+.timer__btn--start:active {
+  background-color: var(--active-green);
+}
+
 .timer__btn--pause {
   background-color: var(--trans-orange);
   color: var(--orange);
+}
+
+.timer__btn--pause:hover {
+  background-color: var(--hover-orange);
+}
+
+.timer__btn--pause:active {
+  background-color: var(--active-orange);
 }
 
 .timer__btn--clear {
@@ -86,15 +100,23 @@ button:active {
 }
 
 .timer__btn--clear:active {
-  background-color: var(--red);
+  background-color: var(--active-red);
 }
 
 .input__btn--add {
-  width: 5em;
+  width: 6em;
   height: 2.5em;
   border-style: none;
   background-color: var(--blue);
   color: white;
+}
+
+.input__btn--add:hover {
+  background-color: var(--hover-blue);
+}
+
+.input__btn--add:active {
+  background-color: var(--active-blue);
 }
 
 .input__btn--add-disabled {
@@ -104,15 +126,12 @@ button:active {
 
 .input {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 75%;
+  margin-left: 0 auto;
   font-family: 'Fira Sans', sans-serif;
   font-weight: 300;
   font-size: 0; /* remove spacing between spans */
   text-align: center;
-  padding: 24px 32px;
-  border-radius: 30px;
+  padding: 1vw 0 1vw;
   background-color: var(--trans-blue);
 }
 
@@ -165,16 +184,15 @@ button:active {
 }
 
 .instructions {
-  display: block;
   font-size: 2vw;
   font-weight: 300;
   font-style: italic;
 }
 
+.instructions--input {
+  display: block;
+}
+
 .instructions--input-disabled {
   visibility: hidden;
 }
-
-/* .instructions--input {
-  color: red;
-} */
