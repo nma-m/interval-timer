@@ -1,6 +1,11 @@
 export default class Interval {
   constructor(hours, minutes, seconds) {
-    this.remainingSeconds = 3600*hours + 60*minutes + seconds;
+    this.remainingSeconds = 3600 * hours + 60 * minutes + seconds;
+
+    const MAXSECONDS = 359999;
+    if (this.remainingSeconds > MAXSECONDS) {
+      this.remainingSeconds = MAXSECONDS;
+    }
   }
 
   syncInterface(hoursElement, minutesElement, secondsElement) {

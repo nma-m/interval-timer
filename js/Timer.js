@@ -4,13 +4,25 @@ export default class Timer {
   constructor() {
     this.intervals = new Array();
     this.remainingSecondsTotal = 0;
-    this.interval = null
+    this.interval = null;
   }
 
   addInterval(hours, minutes, seconds) {
-    const interval = new Interval(hours, minutes, seconds)
-    this.intervals.push(interval);
-    this.remainingSecondsTotal += interval.remainingSeconds;
+    const interval = new Interval(hours, minutes, seconds);
+
+    const MAXSECONDS = 359999;
+    if (this.remainingSecondsTotal + interval.remainingSeconds > MAXSECONDS) {
+      const truncatedIntervalSeconds = MAXSECONDS - this.remainingSecondsTotal;
+      if (truncatedIntervalSeconds > 0) {
+        interval.remainingSeconds = truncatedIntervalSeconds;
+        this.intervals.push(interval);
+      }
+
+      this.remainingSecondsTotal = MAXSECONDS;
+    } else {
+      this.remainingSecondsTotal += interval.remainingSeconds;
+      this.intervals.push(interval);
+    }
   }
 
   syncInterface(hoursElement, minutesElement, secondsElement) {
@@ -25,6 +37,6 @@ export default class Timer {
 
   pop() {
     this.intervals.shift();
-    return this.intervals[0]; 
+    return this.intervals[0];
   }
 }
