@@ -1,3 +1,3 @@
 # interval-timer
 
-https://intervaltimer.xyz/
+[intervaltimer.xyz](https://intervaltimer.xyz/)
