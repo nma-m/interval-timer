@@ -127,9 +127,6 @@ button {
 .input {
   display: block;
   margin-left: 0 auto;
-  font-family: 'Fira Sans', sans-serif;
-  font-weight: 300;
-  font-size: 0; /* remove spacing between spans */
   text-align: center;
   padding: 1vw 0 1vw;
   background-color: var(--trans-blue);
@@ -139,51 +136,28 @@ button {
   cursor: pointer;
 }
 
-.interval__digit {
+.input__box {
+  text-align: right;
+  width: 60vw;
+  font-family: 'Fira Code', monospace;
+  font-weight: 300;
   font-size: 5vw;
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+  cursor: pointer;
+  caret-color: var(--blue);
 }
 
-.interval__digit--unset {
+.input__box-disabled {
   color: var(--gray);
 }
 
-.digit__unit {
-  padding-left: 1vw;
-  padding-right: 2vw;
-  font-size: 3.5vw;
-}
-
-.digit__unit--unset {
-  color: var(--gray);
-}
-
-.digit__unit--sec-with-caret {
-  padding-left: 0;
-}
-
-.caret {
-  display: inline;
-  font-size: 5vw;
-  color: var(--blue);
-  animation: blink 1s linear infinite;
-}
-
-.caret-disabled {
-  display: none;
-}
-
-@keyframes blink {
-  0%,
-  50% {
-    opacity: 1;
-  }
-  51%,
-  100% {
-    opacity: 0;
-  }
+.input__box:focus {
+  outline: none;
 }
 
 .instructions {
+  font-family: 'Fira Sans', sans-serif;
   font-size: 2vw;
   font-weight: 300;
   font-style: italic;

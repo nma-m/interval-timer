@@ -17,23 +17,14 @@
   </head>
   <body>
     <script src="js/main.js" type="module"></script>
-        <div class="input" tabindex="1">
-          <span class="instructions instructions--input">(click to type)</span>
-          <span class="interval__digit interval__digit--unset">0</span>
-          <span class="interval__digit interval__digit--unset">0</span>
-          <span class="digit__unit digit__unit--unset">hr</span>
-          <span class="interval__digit interval__digit--unset">0</span>
-          <span class="interval__digit interval__digit--unset">0</span>
-          <span class="digit__unit digit__unit--unset">min</span>
-          <span class="interval__digit interval__digit--unset">0</span>
-          <span class="interval__digit interval__digit--unset">0</span>
-          <span class="caret caret-disabled">|</span>
-          <span class="digit__unit digit__unit--unset digit__unit--sec">sec</span>
-          <button class="input__btn--add input__btn--add-disabled">
-            Add
-            <span class="instructions">(enter)</span>
-          </button>          
-        </div>
+    <div class="input" tabindex="1">
+      <span class="instructions instructions--input instructions--input-disabled" >(click to type)</span>
+      <input type="text" pattern="\d*" class="input__box input__box-disabled" value="00 hr 00 min 00 sec " spellcheck="false">
+      <button class="input__btn--add input__btn--add-disabled">
+        Add
+        <span class="instructions">(enter)</span>
+      </button>          
+    </div>
     <div class="display">
       <div class="interval">
         <span class="interval__part interval__part--hours">00</span>
