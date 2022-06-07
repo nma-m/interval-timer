@@ -216,7 +216,6 @@ document.querySelector('.input').addEventListener('focus', () => {
 
 document.querySelector('.input__box').addEventListener('blur', (e) => {
   e.target.classList.add('input__box-disabled');
-  // e.target.removeEventListener('keydown', type);
   e.target.removeEventListener('keydown', addWithEnter);
   colorAddButton();
   toggleInputInstructions();
@@ -228,7 +227,7 @@ document.querySelector('.input').addEventListener('blur', () => {
 // Handles typing in input textbox
 function type(e) {
   if (e.key === 'Tab') {
-      // allow tab navigation
+    // allow tab navigation
   } else if (timer.interval === null) { // if the timer isn't running
     if (e.key in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) {
       e.preventDefault();
