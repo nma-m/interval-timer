@@ -8,6 +8,8 @@ var timer = new Timer();
 
 // Start and pause the timer with button click
 document.querySelector('.timer__btn--control').addEventListener('click', () => {
+  document.querySelector('.interval_alarm').load();
+  document.querySelector('.timer_alarm').load();
   start();
 });
 
