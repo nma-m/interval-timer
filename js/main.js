@@ -214,10 +214,9 @@ document.querySelector('.input').addEventListener('focus', () => {
   }
 });
 
-// Disable typing in the input box
 document.querySelector('.input__box').addEventListener('blur', (e) => {
   e.target.classList.add('input__box-disabled');
-  e.target.removeEventListener('keydown', type);
+  // e.target.removeEventListener('keydown', type);
   e.target.removeEventListener('keydown', addWithEnter);
   colorAddButton();
   toggleInputInstructions();
@@ -228,34 +227,38 @@ document.querySelector('.input').addEventListener('blur', () => {
 
 // Handles typing in input textbox
 function type(e) {
-  if (e.key in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) {
-    e.preventDefault();
-    if (e.target.value[0] === '0') { // if not full
-      e.target.value = replaceAtIndex(e.target.value, HOURS_TENS_DIGIT, e.target.value[HOURS_ONES_DIGIT]);
-      e.target.value = replaceAtIndex(e.target.value, HOURS_ONES_DIGIT, e.target.value[MINUTES_TENS_DIGIT]);
-      e.target.value = replaceAtIndex(e.target.value, MINUTES_TENS_DIGIT, e.target.value[MINUTES_ONES_DIGIT]);
-      e.target.value = replaceAtIndex(e.target.value, MINUTES_ONES_DIGIT, e.target.value[SECONDS_TENS_DIGIT]);
-      e.target.value = replaceAtIndex(e.target.value, SECONDS_TENS_DIGIT, e.target.value[SECONDS_ONES_DIGIT]);
-      e.target.value = replaceAtIndex(e.target.value, SECONDS_ONES_DIGIT, e.key);
+  if (e.key === 'Tab') {
+      // allow tab navigation
+  } else if (timer.interval === null) { // if the timer isn't running
+    if (e.key in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+      e.preventDefault();
+      if (e.target.value[0] === '0') { // if not full
+        e.target.value = replaceAtIndex(e.target.value, HOURS_TENS_DIGIT, e.target.value[HOURS_ONES_DIGIT]);
+        e.target.value = replaceAtIndex(e.target.value, HOURS_ONES_DIGIT, e.target.value[MINUTES_TENS_DIGIT]);
+        e.target.value = replaceAtIndex(e.target.value, MINUTES_TENS_DIGIT, e.target.value[MINUTES_ONES_DIGIT]);
+        e.target.value = replaceAtIndex(e.target.value, MINUTES_ONES_DIGIT, e.target.value[SECONDS_TENS_DIGIT]);
+        e.target.value = replaceAtIndex(e.target.value, SECONDS_TENS_DIGIT, e.target.value[SECONDS_ONES_DIGIT]);
+        e.target.value = replaceAtIndex(e.target.value, SECONDS_ONES_DIGIT, e.key);
 
-      e.target.selectionStart = CARET_POS;
-      e.target.selectionEnd = CARET_POS;
-    }
-  } else if (e.key === 'Backspace') {
-    e.preventDefault();
-    if (e.target.value !== '00 hr 00 min 00 sec ') { // if not empty
-      e.target.value = replaceAtIndex(e.target.value, SECONDS_ONES_DIGIT, e.target.value[SECONDS_TENS_DIGIT]);
-      e.target.value = replaceAtIndex(e.target.value, SECONDS_TENS_DIGIT, e.target.value[MINUTES_ONES_DIGIT]);
-      e.target.value = replaceAtIndex(e.target.value, MINUTES_ONES_DIGIT, e.target.value[MINUTES_TENS_DIGIT]);
-      e.target.value = replaceAtIndex(e.target.value, MINUTES_TENS_DIGIT, e.target.value[HOURS_ONES_DIGIT]);
-      e.target.value = replaceAtIndex(e.target.value, HOURS_ONES_DIGIT, e.target.value[HOURS_TENS_DIGIT]);
-      e.target.value = replaceAtIndex(e.target.value, HOURS_TENS_DIGIT, '0');
+        e.target.selectionStart = CARET_POS;
+        e.target.selectionEnd = CARET_POS;
+      }
+    } else if (e.key === 'Backspace') {
+      e.preventDefault();
+      if (e.target.value !== '00 hr 00 min 00 sec ') { // if not empty
+        e.target.value = replaceAtIndex(e.target.value, SECONDS_ONES_DIGIT, e.target.value[SECONDS_TENS_DIGIT]);
+        e.target.value = replaceAtIndex(e.target.value, SECONDS_TENS_DIGIT, e.target.value[MINUTES_ONES_DIGIT]);
+        e.target.value = replaceAtIndex(e.target.value, MINUTES_ONES_DIGIT, e.target.value[MINUTES_TENS_DIGIT]);
+        e.target.value = replaceAtIndex(e.target.value, MINUTES_TENS_DIGIT, e.target.value[HOURS_ONES_DIGIT]);
+        e.target.value = replaceAtIndex(e.target.value, HOURS_ONES_DIGIT, e.target.value[HOURS_TENS_DIGIT]);
+        e.target.value = replaceAtIndex(e.target.value, HOURS_TENS_DIGIT, '0');
 
-      e.target.selectionStart = CARET_POS;
-      e.target.selectionEnd = CARET_POS;
+        e.target.selectionStart = CARET_POS;
+        e.target.selectionEnd = CARET_POS;
+      }
+    } else {
+      e.preventDefault();
     }
-  }  else if (e.key === 'Tab') {
-    // allow tab navigation 
   } else {
     e.preventDefault();
   }
