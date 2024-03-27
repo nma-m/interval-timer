@@ -110,7 +110,7 @@ function start() {
       }
     }, 1000);
 
-    updateInterfaceContols();
+    updateTimerControls();
     clearInput();
     toggleInputInstructions();
     document.querySelector('.input__box').blur();
@@ -122,7 +122,7 @@ function start() {
 function stop() {
   clearInterval(timer.interval);
   timer.interval = null;
-  updateInterfaceContols();
+  updateTimerControls();
   toggleInputInstructions();
 }
 
@@ -189,7 +189,7 @@ function clear() {
   timer.intervals.length = 0;
   timer.remainingSeconds = 0;
   timer.interval = null;
-  updateInterfaceContols();
+  updateTimerControls();
 
   document.querySelector('.interval__part--hours').textContent = '00';
   document.querySelector('.interval__part--minutes').textContent = '00';
@@ -217,7 +217,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-function updateInterfaceContols() {
+function updateTimerControls() {
   var control = document.querySelector('.timer__btn--control');
   if (timer.interval === null) { // if paused
     control.innerHTML =
