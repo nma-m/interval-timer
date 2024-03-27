@@ -107,11 +107,6 @@ main {
   background-color: var(--active-blue);
 }
 
-.btn--disabled, .btn--disabled:active, .btn--disabled:hover {
-  background-color: var(--gray);
-  color: var(--dark-gray);
-}
-
 .display {
   flex-grow: 1;
   justify-self: center;
@@ -207,6 +202,11 @@ button {
 
 .timer__btn--clear:active {
   background-color: var(--active-red);
+}
+
+.btn--disabled, .btn--disabled:active, .btn--disabled:hover {
+  background-color: var(--gray);
+  color: var(--dark-gray);
 }
 
 .instructions {
