@@ -1,3 +1,5 @@
+const MAXSECONDS = 359999;
+
 export default class Timer {
   constructor() {
     this.intervals = new Array();
@@ -8,7 +10,6 @@ export default class Timer {
   addInterval(hours, minutes, seconds) {
     const interval = new Timer.Interval(hours, minutes, seconds);
 
-    const MAXSECONDS = 359999;
     if (this.remainingSeconds + interval.remainingSeconds > MAXSECONDS) {
       const truncatedIntervalSeconds = MAXSECONDS - this.remainingSeconds;
       if (truncatedIntervalSeconds > 0) {
@@ -34,7 +35,6 @@ Timer.Interval = class {
   constructor(hours, minutes, seconds) {
     this.remainingSeconds = 3600 * hours + 60 * minutes + seconds;
 
-    const MAXSECONDS = 359999;
     if (this.remainingSeconds > MAXSECONDS) {
       this.remainingSeconds = MAXSECONDS;
     }
