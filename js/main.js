@@ -184,6 +184,8 @@ function undo() {
 
   if (timer.intervals.length === 0) {
     clear();
+  } else {
+    inputTextBox.focus();
   }
 }
 
