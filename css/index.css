@@ -31,10 +31,16 @@ body {
   display: flex;
   flex-direction: column;
   align-content: center;
-  width: 100%;
-  height: 100%;
-  background-color: white;
   margin: 0;
+  overflow-x: hidden;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  width: 100vw;
+  min-height: 100vh;
 }
 
 .input {
@@ -208,6 +214,30 @@ button {
   font-size: 1.5rem;
   font-weight: 300;
   font-style: italic;
+}
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: .5rem;
+  height: auto;
+  margin: 0 1rem 1rem;
+  font-family: 'Fira Sans', sans-serif;
+}
+
+.site_link {
+  text-decoration: none;
+  color: var(--blue);
+  font-size: 1.25rem;
+}
+
+.site_link:hover {
+  color: var(--hover-blue);
+}
+
+.site_link:active {
+  color: var(--active-blue);
 }
 
 @media (max-width: 768px) {

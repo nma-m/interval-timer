@@ -15,45 +15,53 @@
       rel="stylesheet">
   </head>
   <body>
+    <main>
+      <div class="input" tabindex="-1">
+        <span class="instructions instructions--input instructions--input-disabled" >(click to type)</span>
+        <input type="text" pattern="\d*" class="input__box input__box-disabled" value="00 hr 00 min 00 sec" spellcheck="false">
+        <button class="input__btn--add input__btn--add-disabled">
+          Add
+          <span class="instructions">(enter)</span>
+        </button>          
+      </div>
+      <div class="display">
+        <div class="interval">
+          <span class="interval__part interval__part--hours">00</span>
+          <span class="interval__part">:</span>
+          <span class="interval__part interval__part--minutes">00</span>
+          <span class="interval__part">:</span>
+          <span class="interval__part interval__part--seconds">00</span>
+        </div>
+        <div class="timer">
+          <span class="timer__part timer__part--hours">00</span>
+          <span class="timer__part">:</span>
+          <span class="timer__part timer__part--minutes">00</span>
+          <span class="timer__part">:</span>
+          <span class="timer__part timer__part--seconds">00</span>
+        </div>
+      </div>
+      <div class="control">
+        <button type="button" class="timer__btn timer__btn--clear">
+          Clear
+          <span class="instructions">(esc)</span>
+        </button>
+        <button type="button" class="timer__btn timer__btn--undo">
+          Undo
+          <span class="instructions">(z)</span>
+        </button>
+        <button type="button" class="timer__btn timer__btn--control timer__btn--start">
+          Start
+          <span class="instructions">(space)</span>
+        </button>
+      </div>
+    </main>
+    <footer>
+      <a class="site_link" href="https://github.com/nma-m/interval-timer" target="_blank">nma</a>
+      <a class="github_link" href="https://github.com/nma-m/interval-timer" target="_blank">
+        <img width="25px" height="25px" src="static/github-mark.png" alt="Github logo">
+      </a>
+    </footer>
     <script src="js/main.js" type="module"></script>
-    <div class="input" tabindex="-1">
-      <span class="instructions instructions--input instructions--input-disabled" >(click to type)</span>
-      <input type="text" pattern="\d*" class="input__box input__box-disabled" value="00 hr 00 min 00 sec" spellcheck="false">
-      <button class="input__btn--add input__btn--add-disabled">
-        Add
-        <span class="instructions">(enter)</span>
-      </button>          
-    </div>
-    <div class="display">
-      <div class="interval">
-        <span class="interval__part interval__part--hours">00</span>
-        <span class="interval__part">:</span>
-        <span class="interval__part interval__part--minutes">00</span>
-        <span class="interval__part">:</span>
-        <span class="interval__part interval__part--seconds">00</span>
-      </div>
-      <div class="timer">
-        <span class="timer__part timer__part--hours">00</span>
-        <span class="timer__part">:</span>
-        <span class="timer__part timer__part--minutes">00</span>
-        <span class="timer__part">:</span>
-        <span class="timer__part timer__part--seconds">00</span>
-      </div>
-    </div>
-    <div class="control">
-      <button type="button" class="timer__btn timer__btn--clear">
-        Clear
-        <span class="instructions">(esc)</span>
-      </button>
-      <button type="button" class="timer__btn timer__btn--undo">
-        Undo
-        <span class="instructions">(z)</span>
-      </button>
-      <button type="button" class="timer__btn timer__btn--control timer__btn--start">
-        Start
-        <span class="instructions">(space)</span>
-      </button>
-    </div>
     <audio class="interval_alarm">
       <source src="static/interval_alarm.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
