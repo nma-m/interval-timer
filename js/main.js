@@ -61,7 +61,8 @@ function addInterval() {
 
       // first interval in the queue is the one displayed
       if (timer.intervals.length === 1) {
-        timer.intervals[0].syncInterface(
+        syncInterface(
+          timer.intervals[0],
           document.querySelector('.interval__part--hours'),
           document.querySelector('.interval__part--minutes'),
           document.querySelector('.interval__part--seconds')
@@ -69,7 +70,8 @@ function addInterval() {
       }
 
       // update the total time display
-      timer.syncInterface(
+      syncInterface(
+        timer,
         document.querySelector('.timer__part--hours'),
         document.querySelector('.timer__part--minutes'),
         document.querySelector('.timer__part--seconds')
@@ -80,50 +82,48 @@ function addInterval() {
   }
 }
 
+function syncInterface(time, hoursElement, minutesElement, secondsElement) {
+  const hours = Math.floor(time.remainingSeconds / 3600);
+  const minutes = Math.floor(time.remainingSeconds / 60) - 60 * hours;
+  const seconds = time.remainingSeconds % 60;
+
+  hoursElement.textContent = hours.toString().padStart(2, "0");
+  minutesElement.textContent = minutes.toString().padStart(2, "0");
+  secondsElement.textContent = seconds.toString().padStart(2, "0");
+}
+
 function updateInterfaceTime() {
   // update the current interval display
-  timer.intervals[0].syncInterface(
+  syncInterface(
+    timer.intervals[0],
     document.querySelector('.interval__part--hours'),
     document.querySelector('.interval__part--minutes'),
     document.querySelector('.interval__part--seconds')
   );
 
   // update the total time display
-  timer.syncInterface(
+  syncInterface(
+    timer,
     document.querySelector('.timer__part--hours'),
     document.querySelector('.timer__part--minutes'),
     document.querySelector('.timer__part--seconds')
   );
 }
 
-function updateInterfaceContols() {
-  var control = document.querySelector('.timer__btn--control');
-  if (timer.interval === null) { // if paused
-    control.innerHTML =
-      `Start
-      <span class="instructions">(space)</span>
-      `;
-    control.classList.add('timer__btn--start');
-    control.classList.remove('timer__btn--pause');
-  } else { // if running
-    control.innerHTML = 
-      `Pause
-      <span class="instructions">(space)</span>
-      `;
-    control.classList.add('timer__btn--pause');
-    control.classList.remove('timer__btn--start');
-  }
-}
+
+////////////////////////////
+//        CONTROLS        //
+////////////////////////////
 
 function start() {
-  if (timer.remainingSecondsTotal === 0) {
+  if (timer.remainingSeconds === 0) {
     // do nothing until they add time
   } else if (timer.interval === null) {
     var currentInterval = timer.intervals[0];
 
     timer.interval = setInterval(() => {
       currentInterval.remainingSeconds -= 1;
-      timer.remainingSecondsTotal -= 1;
+      timer.remainingSeconds -= 1;
       updateInterfaceTime();
 
       if (currentInterval.remainingSeconds === 0) {
@@ -162,7 +162,7 @@ function clear() {
   }
 
   timer.intervals.length = 0;
-  timer.remainingSecondsTotal = 0;
+  timer.remainingSeconds = 0;
   timer.interval = null;
   updateInterfaceContols();
 
@@ -174,6 +174,25 @@ function clear() {
   document.querySelector('.timer__part--seconds').textContent = '00';
   
   document.querySelector('.input__box').focus();
+}
+
+function updateInterfaceContols() {
+  var control = document.querySelector('.timer__btn--control');
+  if (timer.interval === null) { // if paused
+    control.innerHTML =
+      `Start
+      <span class="instructions">(space)</span>
+      `;
+    control.classList.add('timer__btn--start');
+    control.classList.remove('timer__btn--pause');
+  } else { // if running
+    control.innerHTML = 
+      `Pause
+      <span class="instructions">(space)</span>
+      `;
+    control.classList.add('timer__btn--pause');
+    control.classList.remove('timer__btn--start');
+  }
 }
 
 
