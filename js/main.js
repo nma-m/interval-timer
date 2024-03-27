@@ -6,37 +6,6 @@ import Timer from './Timer.js';
 
 var timer = new Timer();
 
-// Start and pause the timer with button click
-document.querySelector('.timer__btn--control').addEventListener('click', () => {
-  document.querySelector('.interval_alarm').load();
-  document.querySelector('.timer_alarm').load();
-  start();
-});
-
-// Start and pause the timer with Space
-document.addEventListener('keydown', (e) => {
-  if (e.key === ' ') {
-    e.preventDefault();
-    start();
-  }
-});
-
-// Reset the timer with button click
-document.querySelector('.timer__btn--clear').addEventListener('click', () => {
-  if (timer.intervals.length > 0) {
-    clear();
-  }
-});
-
-// Reset the timer with ESC
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    if (timer.intervals.length > 0) {
-      clear();
-    }
-  }
-});
-
 function addInterval() {
   if (timer.interval == null) { // only allow edits to timer when paused
 
@@ -78,6 +47,7 @@ function addInterval() {
       );
 
       clearInput();
+      colorUndoButton();
     }
   }
 }
@@ -111,9 +81,9 @@ function updateInterfaceTime() {
 }
 
 
-////////////////////////////
-//        CONTROLS        //
-////////////////////////////
+///////////////////////////
+//    TIMER  CONTROLS    //
+///////////////////////////
 
 function start() {
   if (timer.remainingSeconds === 0) {
@@ -156,6 +126,61 @@ function stop() {
   toggleInputInstructions();
 }
 
+// Start and pause the timer with button click
+document.querySelector('.timer__btn--control').addEventListener('click', () => {
+  document.querySelector('.interval_alarm').load();
+  document.querySelector('.timer_alarm').load();
+  start();
+});
+
+// Start and pause the timer with Space
+document.addEventListener('keydown', (e) => {
+  if (e.key === ' ') {
+    e.preventDefault();
+    start();
+  }
+});
+
+function undo() {
+  timer.undoInterval();
+
+  syncInterface(
+    timer,
+    document.querySelector('.timer__part--hours'),
+    document.querySelector('.timer__part--minutes'),
+    document.querySelector('.timer__part--seconds')
+  );
+
+  if (timer.intervals.length === 0) {
+    clear();
+  }
+}
+
+// Undo the last interval with button click
+document.querySelector('.timer__btn--undo').addEventListener('click', () => {
+  if (timer.intervals.length > 0) {
+    undo();
+  }
+});
+
+// Undo the last interval with z key press
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'z') {
+    if (timer.intervals.length > 0) {
+      e.preventDefault();
+      undo();
+    }
+  }
+});
+
+function colorUndoButton() {
+  if (timer.intervals.length > 0) {
+    document.querySelector('.timer__btn--undo').classList.remove('btn--disabled');
+  } else {
+    document.querySelector('.timer__btn--undo').classList.add('btn--disabled');
+  }
+}
+
 function clear() {
   if (timer.interval != null) {
     stop();
@@ -176,6 +201,22 @@ function clear() {
   document.querySelector('.input__box').focus();
 }
 
+// Reset the timer with button click
+document.querySelector('.timer__btn--clear').addEventListener('click', () => {
+  if (timer.intervals.length > 0) {
+    clear();
+  }
+});
+
+// Reset the timer with ESC
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (timer.intervals.length > 0) {
+      clear();
+    }
+  }
+});
+
 function updateInterfaceContols() {
   var control = document.querySelector('.timer__btn--control');
   if (timer.interval === null) { // if paused
@@ -193,6 +234,7 @@ function updateInterfaceContols() {
     control.classList.add('timer__btn--pause');
     control.classList.remove('timer__btn--start');
   }
+  colorUndoButton();
 }
 
 
@@ -307,7 +349,7 @@ document.querySelector('.input__btn--add').addEventListener('focus', () => {
   colorAddButton();
 });
 document.querySelector('.input__btn--add').addEventListener('blur', () => {
-  document.querySelector('.input__btn--add').classList.add('input__btn--add-disabled');
+  document.querySelector('.input__btn--add').classList.add('btn--disabled');
 });
 
 function colorAddButton() {
@@ -315,10 +357,10 @@ function colorAddButton() {
 
   for (var i = 0; i < digits.length; i++) {
     if (document.querySelector('.input__box').value[digits[i]] !== '0') {
-      document.querySelector('.input__btn--add').classList.remove('input__btn--add-disabled');
+      document.querySelector('.input__btn--add').classList.remove('btn--disabled');
       break;
     } else {
-      document.querySelector('.input__btn--add').classList.add('input__btn--add-disabled');
+      document.querySelector('.input__btn--add').classList.add('btn--disabled');
     }
   }
 }
@@ -352,4 +394,5 @@ function clearInput() {
 
 window.addEventListener('DOMContentLoaded', function () {
   document.querySelector('.input__box').focus();
+  colorUndoButton();
 });

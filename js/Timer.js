@@ -25,6 +25,13 @@ export default class Timer {
     }
   }
 
+  undoInterval() {
+    if (this.intervals.length > 0) {
+      const undone_interval = this.intervals.pop();
+      this.remainingSeconds -= undone_interval.remainingSeconds;
+    }
+  }
+
   pop() {
     this.intervals.shift();
     return this.intervals[0];
