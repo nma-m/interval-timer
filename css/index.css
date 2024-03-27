@@ -22,16 +22,99 @@
   --dark-gray: rgb(108, 108, 112);
 }
 
+html {
+  width: 100vw;
+  height: 100vh;
+}
+
 body {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  width: 100%;
+  height: 100%;
   background-color: white;
   margin: 0;
 }
 
-.display {
+.input {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem 0 1rem;
+  background-color: var(--trans-blue);
+}
+
+.input:hover {
+  cursor: pointer;
+}
+
+.instructions--input {
   display: block;
-  margin: calc(100px - 5%) auto;
-  font-size: 0;
+}
+
+.instructions--input-disabled {
+  visibility: hidden;
+}
+
+.input__box {
+  text-align: center;
+  width: max-content;
   font-family: 'Fira Code', monospace;
+  font-weight: 300;
+  font-size: 4rem;
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+  cursor: pointer;
+  caret-color: var(--blue);
+}
+
+.input__box-disabled {
+  color: var(--gray);
+}
+
+.input__box:focus {
+  outline: none;
+}
+
+.input__btn--add {
+  width: 32rem;
+  max-width: 80vw;
+  height: 1.5em;
+  padding: 0.25rem 0;
+  border-style: none;
+  background-color: var(--blue);
+  color: white;
+  font-size: 3rem;
+  font-weight: 400;
+  text-align: center;
+}
+
+.input__btn--add:hover {
+  background-color: var(--hover-blue);
+}
+
+.input__btn--add:active {
+  background-color: var(--active-blue);
+}
+
+.btn--disabled, .btn--disabled:active, .btn--disabled:hover {
+  background-color: var(--gray);
+  color: var(--dark-gray);
+}
+
+.display {
+  flex-grow: 1;
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Fira Code', monospace;
+  font-size: 0;
   text-align: center;
 }
 
@@ -52,15 +135,13 @@ body {
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 button {
   border-radius: 15px;
   cursor: pointer;
   font-family: 'Fira Sans', sans-serif;
-  font-size: 3vw;
-  font-weight: 400;
-  text-align: center;
 }
 
 .timer__btn {
@@ -122,27 +203,6 @@ button {
   background-color: var(--active-red);
 }
 
-.input__btn--add {
-  width: 6em;
-  height: 2.5em;
-  border-style: none;
-  background-color: var(--blue);
-  color: white;
-}
-
-.input__btn--add:hover {
-  background-color: var(--hover-blue);
-}
-
-.input__btn--add:active {
-  background-color: var(--active-blue);
-}
-
-.btn--disabled, .btn--disabled:active, .btn--disabled:hover {
-  background-color: var(--gray);
-  color: var(--dark-gray);
-}
-
 .instructions {
   font-family: 'Fira Sans', sans-serif;
   font-size: 1.5rem;
@@ -150,47 +210,11 @@ button {
   font-style: italic;
 }
 
-.instructions--input {
-  display: block;
-}
-
-.instructions--input-disabled {
-  visibility: hidden;
-}
-
-.input {
-  display: block;
-  margin-left: 0 auto;
-  text-align: center;
-  padding: 1vw 0 1vw;
-  background-color: var(--trans-blue);
-}
-
-.input:hover {
-  cursor: pointer;
-}
-
-.input__box {
-  text-align: right;
-  width: 60vw;
-  font-family: 'Fira Code', monospace;
-  font-weight: 300;
-  font-size: 5vw;
-  border: none;
-  background-color: rgba(255, 255, 255, 0);
-  cursor: pointer;
-  caret-color: var(--blue);
-}
-
-.input__box-disabled {
-  color: var(--gray);
-}
-
-.input__box:focus {
-  outline: none;
-}
-
 @media (max-width: 768px) {
+  .input__box {
+    font-size: 8vw;
+  }
+
   .interval__part {
     font-size: 20vw;
     font-weight: 300;
@@ -203,10 +227,20 @@ button {
   .control {
     flex-direction: column-reverse;
   }
+
+  .timer__btn {
+    height: 2em;
+    width: 80vw;
+  }
 }
 
 @media (max-width: 430px) {
-  .control button {
-    height: 1.5em;
+  .timer__btn,
+  .input__btn--add {
+    font-size: 2rem;
+  }
+
+  .instructions {
+    font-size: 1rem;
   }
 }
