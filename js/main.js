@@ -1,5 +1,25 @@
 import Timer from './Timer.js';
 
+////////////////////
+//    ELEMENTS    //
+////////////////////
+
+const inputDiv = document.querySelector('.input');
+const inputInstructions = document.querySelector('.instructions--input');
+const inputTextBox = document.querySelector('.input__box');
+const inputBtn = document.querySelector('.input__btn--add');
+const intervalHoursPart = document.querySelector('.interval__part--hours');
+const intervalMinutesPart = document.querySelector('.interval__part--minutes');
+const intervalSecondsPart = document.querySelector('.interval__part--seconds');
+const timerHoursPart = document.querySelector('.timer__part--hours');
+const timerMinutesPart = document.querySelector('.timer__part--minutes');
+const timerSecondsPart = document.querySelector('.timer__part--seconds');
+const startPauseBtn = document.querySelector('.timer__btn--control');
+const undoBtn = document.querySelector('.timer__btn--undo');
+const clearBtn = document.querySelector('.timer__btn--clear');
+const intervalAlarmSound = document.querySelector('.interval_alarm');
+const timerAlarmSound = document.querySelector('.timer_alarm');
+
 /////////////////////////////
 //          TIMER          //
 //////////////// ////////////
@@ -9,14 +29,14 @@ var timer = new Timer();
 function addInterval() {
   if (timer.interval == null) { // only allow edits to timer when paused
 
-    const hours = document.querySelector('.input__box').value[HOURS_TENS_DIGIT] +
-      document.querySelector('.input__box').value[HOURS_ONES_DIGIT];
+    const hours = inputTextBox.value[HOURS_TENS_DIGIT] +
+      inputTextBox.value[HOURS_ONES_DIGIT];
 
-    const minutes = document.querySelector('.input__box').value[MINUTES_TENS_DIGIT] +
-      document.querySelector('.input__box').value[MINUTES_ONES_DIGIT];
+    const minutes = inputTextBox.value[MINUTES_TENS_DIGIT] +
+      inputTextBox.value[MINUTES_ONES_DIGIT];
 
-    const seconds = document.querySelector('.input__box').value[SECONDS_TENS_DIGIT] +
-      document.querySelector('.input__box').value[SECONDS_ONES_DIGIT];
+    const seconds = inputTextBox.value[SECONDS_TENS_DIGIT] +
+      inputTextBox.value[SECONDS_ONES_DIGIT];
 
     if (hours === '00' && minutes === '00' && seconds === '00') {
       // can't add interval of length 00:00:00
@@ -32,18 +52,18 @@ function addInterval() {
       if (timer.intervals.length === 1) {
         syncInterface(
           timer.intervals[0],
-          document.querySelector('.interval__part--hours'),
-          document.querySelector('.interval__part--minutes'),
-          document.querySelector('.interval__part--seconds')
+          intervalHoursPart,
+          intervalMinutesPart,
+          intervalSecondsPart
         );
       }
 
       // update the total time display
       syncInterface(
         timer,
-        document.querySelector('.timer__part--hours'),
-        document.querySelector('.timer__part--minutes'),
-        document.querySelector('.timer__part--seconds')
+        timerHoursPart,
+        timerMinutesPart,
+        timerSecondsPart
       );
 
       clearInput();
@@ -74,17 +94,17 @@ function updateInterfaceTime() {
   // update the current interval display
   syncInterface(
     timer.intervals[0],
-    document.querySelector('.interval__part--hours'),
-    document.querySelector('.interval__part--minutes'),
-    document.querySelector('.interval__part--seconds')
+    intervalHoursPart,
+    intervalMinutesPart,
+    intervalSecondsPart
   );
 
   // update the total time display
   syncInterface(
     timer,
-    document.querySelector('.timer__part--hours'),
-    document.querySelector('.timer__part--minutes'),
-    document.querySelector('.timer__part--seconds')
+    timerHoursPart,
+    timerMinutesPart,
+    timerSecondsPart
   );
 
   displayCurrentIntervalInTitle();
@@ -110,12 +130,12 @@ function start() {
         if (timer.intervals.length > 1) { // if there's another interval 
           currentInterval = timer.pop();
           updateInterfaceTime();
-          document.querySelector('.interval_alarm').play();
+          intervalAlarmSound.play();
         } else {  // if it's the last interval
           timer.intervals.shift();
           stop();
-          document.querySelector('.input__box').focus();
-          document.querySelector('.timer_alarm').play();
+          inputTextBox.focus();
+          timerAlarmSound.play();
           document.title = "Interval Timer";
         }
       }
@@ -124,7 +144,7 @@ function start() {
     updateTimerControls();
     clearInput();
     toggleInputInstructions();
-    document.querySelector('.input__box').blur();
+    inputTextBox.blur();
   } else {
     stop();
   }
@@ -138,9 +158,9 @@ function stop() {
 }
 
 // Start and pause the timer with button click
-document.querySelector('.timer__btn--control').addEventListener('click', () => {
-  document.querySelector('.interval_alarm').load();
-  document.querySelector('.timer_alarm').load();
+startPauseBtn.addEventListener('click', () => {
+  intervalAlarmSound.load();
+  timerAlarmSound.load();
   start();
 });
 
@@ -157,9 +177,9 @@ function undo() {
 
   syncInterface(
     timer,
-    document.querySelector('.timer__part--hours'),
-    document.querySelector('.timer__part--minutes'),
-    document.querySelector('.timer__part--seconds')
+    timerHoursPart,
+    timerMinutesPart,
+    timerSecondsPart
   );
 
   if (timer.intervals.length === 0) {
@@ -168,7 +188,7 @@ function undo() {
 }
 
 // Undo the last interval with button click
-document.querySelector('.timer__btn--undo').addEventListener('click', () => {
+undoBtn.addEventListener('click', () => {
   if (timer.intervals.length > 0) {
     undo();
   }
@@ -186,9 +206,9 @@ document.addEventListener('keydown', (e) => {
 
 function colorUndoButton() {
   if (timer.intervals.length > 0) {
-    document.querySelector('.timer__btn--undo').classList.remove('btn--disabled');
+    undoBtn.classList.remove('btn--disabled');
   } else {
-    document.querySelector('.timer__btn--undo').classList.add('btn--disabled');
+    undoBtn.classList.add('btn--disabled');
   }
 }
 
@@ -203,18 +223,18 @@ function clear() {
   updateTimerControls();
   document.title = "Interval Timer";
 
-  document.querySelector('.interval__part--hours').textContent = '00';
-  document.querySelector('.interval__part--minutes').textContent = '00';
-  document.querySelector('.interval__part--seconds').textContent = '00';
-  document.querySelector('.timer__part--hours').textContent = '00';
-  document.querySelector('.timer__part--minutes').textContent = '00';
-  document.querySelector('.timer__part--seconds').textContent = '00';
+  intervalHoursPart.textContent = '00';
+  intervalMinutesPart.textContent = '00';
+  intervalSecondsPart.textContent = '00';
+  timerHoursPart.textContent = '00';
+  timerMinutesPart.textContent = '00';
+  timerSecondsPart.textContent = '00';
   
-  document.querySelector('.input__box').focus();
+  inputTextBox.focus();
 }
 
 // Reset the timer with button click
-document.querySelector('.timer__btn--clear').addEventListener('click', () => {
+clearBtn.addEventListener('click', () => {
   if (timer.intervals.length > 0) {
     clear();
   }
@@ -230,7 +250,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 function updateTimerControls() {
-  var control = document.querySelector('.timer__btn--control');
+  var control = startPauseBtn;
   if (timer.interval === null) { // if paused
     control.innerHTML =
       `Start
@@ -264,13 +284,13 @@ const SECONDS_ONES_DIGIT = 14;
 const CARET_POS = 15;
 
 // Place caret at the right spot on textbox click
-document.querySelector('.input__box').addEventListener('click', (e) => {
+inputTextBox.addEventListener('click', (e) => {
   e.target.selectionStart = CARET_POS;
   e.target.selectionEnd = CARET_POS;
 });
 
 // Allow user to input interval if timer is stopped
-document.querySelector('.input__box').addEventListener('focus', (e) => {
+inputTextBox.addEventListener('focus', (e) => {
   if (timer.interval === null) {
     e.target.selectionStart = CARET_POS;
     e.target.selectionEnd = CARET_POS;
@@ -281,20 +301,20 @@ document.querySelector('.input__box').addEventListener('focus', (e) => {
     toggleInputInstructions();
   }
 });
-document.querySelector('.input').addEventListener('focus', () => {
+inputDiv.addEventListener('focus', () => {
   if (timer.interval === null) {
-    document.querySelector('.input__box').focus();
+    inputTextBox.focus();
   }
 });
 
-document.querySelector('.input__box').addEventListener('blur', (e) => {
+inputTextBox.addEventListener('blur', (e) => {
   e.target.classList.add('input__box-disabled');
   e.target.removeEventListener('keydown', addWithEnter);
   colorAddButton();
   toggleInputInstructions();
 });
-document.querySelector('.input').addEventListener('blur', () => {
-  document.querySelector('.input__box').blur();
+inputDiv.addEventListener('blur', () => {
+  inputTextBox.blur();
 });
 
 // Handles typing in input textbox
@@ -344,9 +364,9 @@ function replaceAtIndex(str, i, chr) {
 }
 
 // Add an Interval to Timer.intervals and update the interface
-document.querySelector('.input__btn--add').addEventListener('click', () => {
+inputBtn.addEventListener('click', () => {
   addInterval();
-  document.querySelector('.input__box').focus();
+  inputTextBox.focus();
 });
 
 // Add Interval by pressing enter
@@ -357,54 +377,54 @@ function addWithEnter(e) {
 }
 
 // Add button coloring event listeners
-document.querySelector('.input__btn--add').addEventListener('focus', () => {
+inputBtn.addEventListener('focus', () => {
   colorAddButton();
 });
-document.querySelector('.input__btn--add').addEventListener('blur', () => {
-  document.querySelector('.input__btn--add').classList.add('btn--disabled');
+inputBtn.addEventListener('blur', () => {
+  inputBtn.classList.add('btn--disabled');
 });
 
 function colorAddButton() {
   const digits = [HOURS_TENS_DIGIT, HOURS_ONES_DIGIT, MINUTES_TENS_DIGIT, MINUTES_ONES_DIGIT, SECONDS_TENS_DIGIT, SECONDS_ONES_DIGIT];
 
   for (var i = 0; i < digits.length; i++) {
-    if (document.querySelector('.input__box').value[digits[i]] !== '0') {
-      document.querySelector('.input__btn--add').classList.remove('btn--disabled');
+    if (inputTextBox.value[digits[i]] !== '0') {
+      inputBtn.classList.remove('btn--disabled');
       break;
     } else {
-      document.querySelector('.input__btn--add').classList.add('btn--disabled');
+      inputBtn.classList.add('btn--disabled');
     }
   }
 }
 
 function toggleInputInstructions() {
   if (timer.interval === null) {
-    if (document.activeElement == document.querySelector('.input__box')) {
-      document.querySelector('.instructions--input').classList.add('instructions--input-disabled');
+    if (document.activeElement == inputTextBox) {
+      inputInstructions.classList.add('instructions--input-disabled');
     } else {
-      document.querySelector('.instructions--input').classList.remove('instructions--input-disabled');
+      inputInstructions.classList.remove('instructions--input-disabled');
     }
   } else {
-    document.querySelector('.instructions--input').classList.add('instructions--input-disabled');
+    inputInstructions.classList.add('instructions--input-disabled');
   }
 }
 
 function clearInput() {
-  document.querySelector('.input__box').value = replaceAtIndex(document.querySelector('.input__box').value, SECONDS_ONES_DIGIT, '0');
-  document.querySelector('.input__box').value = replaceAtIndex(document.querySelector('.input__box').value, SECONDS_TENS_DIGIT, '0');
-  document.querySelector('.input__box').value = replaceAtIndex(document.querySelector('.input__box').value, MINUTES_ONES_DIGIT, '0');
-  document.querySelector('.input__box').value = replaceAtIndex(document.querySelector('.input__box').value, MINUTES_TENS_DIGIT, '0');
-  document.querySelector('.input__box').value = replaceAtIndex(document.querySelector('.input__box').value, HOURS_ONES_DIGIT, '0');
-  document.querySelector('.input__box').value = replaceAtIndex(document.querySelector('.input__box').value, HOURS_TENS_DIGIT, '0');
+  inputTextBox.value = replaceAtIndex(inputTextBox.value, SECONDS_ONES_DIGIT, '0');
+  inputTextBox.value = replaceAtIndex(inputTextBox.value, SECONDS_TENS_DIGIT, '0');
+  inputTextBox.value = replaceAtIndex(inputTextBox.value, MINUTES_ONES_DIGIT, '0');
+  inputTextBox.value = replaceAtIndex(inputTextBox.value, MINUTES_TENS_DIGIT, '0');
+  inputTextBox.value = replaceAtIndex(inputTextBox.value, HOURS_ONES_DIGIT, '0');
+  inputTextBox.value = replaceAtIndex(inputTextBox.value, HOURS_TENS_DIGIT, '0');
 
-  document.querySelector('.input__box').selectionStart = CARET_POS;
-  document.querySelector('.input__box').selectionEnd = CARET_POS;
+  inputTextBox.selectionStart = CARET_POS;
+  inputTextBox.selectionEnd = CARET_POS;
   
   colorAddButton();
 }
 
 
 window.addEventListener('DOMContentLoaded', function () {
-  document.querySelector('.input__box').focus();
+  inputTextBox.focus();
   colorUndoButton();
 });
