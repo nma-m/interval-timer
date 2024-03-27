@@ -62,6 +62,14 @@ function syncInterface(time, hoursElement, minutesElement, secondsElement) {
   secondsElement.textContent = seconds.toString().padStart(2, "0");
 }
 
+function displayCurrentIntervalInTitle() {
+  const hours = Math.floor(timer.intervals[0].remainingSeconds / 3600);
+  const minutes = Math.floor(timer.intervals[0].remainingSeconds / 60) - 60 * hours;
+  const seconds = timer.intervals[0].remainingSeconds % 60;
+
+  document.title = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+}
+
 function updateInterfaceTime() {
   // update the current interval display
   syncInterface(
@@ -78,6 +86,8 @@ function updateInterfaceTime() {
     document.querySelector('.timer__part--minutes'),
     document.querySelector('.timer__part--seconds')
   );
+
+  displayCurrentIntervalInTitle();
 }
 
 
@@ -106,6 +116,7 @@ function start() {
           stop();
           document.querySelector('.input__box').focus();
           document.querySelector('.timer_alarm').play();
+          document.title = "Interval Timer";
         }
       }
     }, 1000);
@@ -190,6 +201,7 @@ function clear() {
   timer.remainingSeconds = 0;
   timer.interval = null;
   updateTimerControls();
+  document.title = "Interval Timer";
 
   document.querySelector('.interval__part--hours').textContent = '00';
   document.querySelector('.interval__part--minutes').textContent = '00';
